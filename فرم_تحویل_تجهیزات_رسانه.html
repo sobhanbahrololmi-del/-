@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فرم تحویل تجهیزات رسانه</title>
+<style>
+*{box-sizing:border-box}
+:root{--ink:#17202a;--muted:#64707d;--line:#d9dee5;--soft:#f4f6f8;--accent:#263746}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#eef1f4;color:var(--ink)}
+button,input,textarea,select{font:inherit}
+.app{max-width:1180px;margin:0 auto;padding:28px 18px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.topbar h1{margin:0;font-size:22px}.topbar p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:9px;padding:11px 16px;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--accent);color:#fff}.btn.secondary{background:#fff;border:1px solid var(--line)}.btn.danger{background:#fff1f1;color:#a32626;border:1px solid #efcaca}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 5px 18px #17202a0b}
+.card h2{font-size:14px;margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.field label{display:block;font-size:11px;font-weight:700;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;border:1px solid #cfd6dd;border-radius:8px;padding:9px 10px;background:#fff;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#6d7d8a;box-shadow:0 0 0 3px #26374612}
+.field textarea{resize:vertical;min-height:70px}
+.span2{grid-column:span 2}.span4{grid-column:span 4}
+.equip-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.equip-head small{color:var(--muted)}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th,td{border:1px solid var(--line);padding:7px;font-size:11px;vertical-align:middle}
+th{background:var(--soft);font-weight:800}
+td input,td select{width:100%;border:1px solid #d4d9df;border-radius:6px;padding:6px;font-size:10px}
+.remove{border:0;background:#fff0f0;color:#a22;border-radius:6px;padding:6px 9px;cursor:pointer}
+.note{font-size:11px;color:var(--muted);line-height:1.9}
+#preview{display:none}
+.overlay{position:fixed;inset:0;background:#0008;z-index:20;padding:20px;overflow:auto}
+.modal{background:#eef1f4;max-width:900px;margin:0 auto;min-height:100%;padding:18px;border-radius:14px}
+.modalbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.modalbar strong{font-size:15px}
+.paper{background:#fff;width:210mm;min-height:297mm;margin:auto;padding:13mm 14mm;box-shadow:0 5px 25px #0002;color:#111;position:relative}
+.print-head{display:grid;grid-template-columns:25% 50% 25%;align-items:center;border-bottom:2px solid #111;padding-bottom:8px}
+.logo{width:48px;height:48px;border:2px solid #111;display:flex;align-items:center;justify-content:center;font-weight:900;margin:auto}
+.center{text-align:center}.center h1{font-size:18px;margin:0}.center p{font-size:9px;margin:5px 0 0}
+.meta{font-size:8px;line-height:2.2}.meta div{border-bottom:1px dotted #777}
+.psec{margin-top:8px}.ptitle{background:#111;color:#fff;padding:5px 8px;font-size:9px;font-weight:bold;margin-bottom:4px}
+.ptable{width:100%;border-collapse:collapse}.ptable th,.ptable td{border:1px solid #333;padding:4px;font-size:8px;height:22px}.ptable th{background:#eee;text-align:center}.ptable td{text-align:right}
+.equipment-print td,.equipment-print th{text-align:center;font-size:7.5px;height:21px}
+.commit{border:1px solid #333;padding:7px 9px;font-size:8px;line-height:2;text-align:justify;min-height:65px}
+.notes-print{border:1px solid #333;min-height:52px;padding:6px;font-size:8px;line-height:2;white-space:pre-wrap}
+.signs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.sign{border:1px solid #333;height:96px;position:relative}.sign h4{margin:0;background:#eee;border-bottom:1px solid #333;text-align:center;padding:4px;font-size:8px}.sign p{font-size:7px;line-height:2;padding:5px;margin:0}.finger{position:absolute;left:6px;bottom:6px;border:1px dashed #555;width:43px;height:48px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:6px}.stamp{position:absolute;width:60px;height:60px;border:1px dashed #555;border-radius:50%;left:50%;top:27px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;font-size:7px}
+.print-footer{position:absolute;bottom:6mm;right:14mm;left:14mm;border-top:1px solid #777;padding-top:3px;display:flex;justify-content:space-between;font-size:6.5px;color:#555}
+.close{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 14px;cursor:pointer}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.span4{grid-column:span 2}.paper{transform-origin:top center}}
+@media print{
+body{background:#fff}.app,.overlay{display:none!important}
+#preview{display:block!important}
+.paper{box-shadow:none;margin:0;width:210mm;min-height:297mm}
+@page{size:A4;margin:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div>
+      <h1>فرم تحویل تجهیزات رسانه</h1>
+      <p>فرم ورود اطلاعات و ساخت رسید رسمی قابل چاپ</p>
+    </div>
+    <div class="actions">
+      <button class="btn secondary" onclick="clearForm()">پاک کردن فرم</button>
+      <button class="btn primary" onclick="showPreview()">پیش‌نمایش خروجی</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>۱. اطلاعات رسید</h2>
+    <div class="grid">
+      <div class="field"><label>شماره رسید</label><input id="receiptNo" placeholder="مثلاً 1405-001"></div>
+      <div class="field"><label>تاریخ</label><input id="date" placeholder="1405/../.."></div>
+      <div class="field"><label>ساعت</label><input id="time" placeholder="--:--"></div>
+      <div class="field"><label>پروژه / برنامه</label><input id="project" placeholder="مثلاً پوشش هیئت"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>۲. مشخصات تحویل</h2>
+    <div class="grid">
+      <div class="field"><label>نام تحویل‌دهنده</label><input id="giver"></div>
+      <div class="field"><label>سمت / مسئولیت تحویل‌دهنده</label><input id="giverRole"></div>
+      <div class="field"><label>نام تحویل‌گیرنده</label><input id="receiver"></div>
+      <div class="field"><label>شماره تماس</label><input id="phone"></div>
+      <div class="field span2"><label>محل استفاده تجهیزات</label><input id="location"></div>
+      <div class="field span2"><label>تاریخ و ساعت پیش‌بینی بازگشت</label><input id="returnDate" placeholder="تاریخ / ساعت"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="equip-head">
+      <div><h2 style="margin:0;border:0;padding:0">۳. تجهیزات تحویلی</h2><small>برای هر تجهیز یک ردیف ثبت کنید.</small></div>
+      <button class="btn secondary" onclick="addRow()">＋ افزودن تجهیز</button>
+    </div>
+    <div class="table-wrap">
+      <table id="equipInput">
+        <thead><tr><th>ردیف</th><th>کد تجهیز</th><th>نام تجهیز</th><th>تعداد</th><th>وضعیت</th><th>اقلام همراه / توضیحات</th><th>حذف</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>۴. توضیحات و شرایط</h2>
+    <div class="grid">
+      <div class="field span4"><label>توضیحات تکمیلی</label><textarea id="notes" placeholder="هر نکته‌ای درباره وضعیت، نحوه استفاده، اقلام همراه یا شرایط تحویل..."></textarea></div>
+    </div>
+    <p class="note">پس از تکمیل فرم، روی «پیش‌نمایش خروجی» بزنید. در پیش‌نمایش می‌توانید نسخه رسمی را بررسی کنید و سپس «چاپ / خروجی PDF» را بزنید.</p>
+  </div>
+</div>
+
+<div id="preview">
+  <div class="overlay">
+    <div class="modal">
+      <div class="modalbar">
+        <strong>پیش‌نمایش رسید رسمی</strong>
+        <div class="actions">
+          <button class="btn primary" onclick="window.print()">🖨 چاپ / خروجی PDF</button>
+          <button class="close" onclick="closePreview()">بستن</button>
+        </div>
+      </div>
+      <div id="paperHolder"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let rows = [];
+
+function addRow(data={}) {
+  rows.push(data);
+  renderRows();
+}
+function renderRows(){
+  const body=document.querySelector('#equipInput tbody');
+  body.innerHTML='';
+  rows.forEach((r,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${i+1}</td>
+      <td><input value="${esc(r.code||'')}" oninput="rows[${i}].code=this.value"></td>
+      <td><input value="${esc(r.name||'')}" oninput="rows[${i}].name=this.value"></td>
+      <td><input type="number" min="1" value="${esc(r.qty||1)}" oninput="rows[${i}].qty=this.value"></td>
+      <td><select onchange="rows[${i}].condition=this.value">
+        <option ${r.condition==='سالم'?'selected':''}>سالم</option>
+        <option ${r.condition==='نیازمند بررسی'?'selected':''}>نیازمند بررسی</option>
+        <option ${r.condition==='دارای ایراد'?'selected':''}>دارای ایراد</option>
+      </select></td>
+      <td><input value="${esc(r.accessories||'')}" oninput="rows[${i}].accessories=this.value"></td>
+      <td><button class="remove" onclick="rows.splice(${i},1);renderRows()">حذف</button></td>`;
+    body.appendChild(tr);
+  });
+}
+function esc(v){return String(v).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
+function val(id){return document.getElementById(id).value.trim()}
+
+function showPreview(){
+  const active=rows.filter(r=>r.name||r.code);
+  const equipment=active.length?active.map((r,i)=>`
+    <tr><td>${i+1}</td><td>${esc(r.code)}</td><td>${esc(r.name)}</td><td>${esc(r.qty||1)}</td><td>${esc(r.condition||'سالم')}</td><td>${esc(r.accessories||'')}</td></tr>`).join('')
+    : `<tr><td colspan="6" style="height:35px">موردی ثبت نشده است</td></tr>`;
+
+  const paper=`
+  <div class="paper">
+    <div class="print-head">
+      <div class="center"><div class="logo">ب</div><div style="font-size:8px;margin-top:3px">مجموعه بصائر</div></div>
+      <div class="center"><h1>رسید تحویل تجهیزات رسانه</h1><p>واحد رسانه ـ مجموعه بصائر</p></div>
+      <div class="meta">
+        <div>شماره رسید: ${esc(val('receiptNo'))}</div>
+        <div>تاریخ: ${esc(val('date'))}</div>
+        <div>ساعت: ${esc(val('time'))}</div>
+      </div>
+    </div>
+
+    <div class="psec"><div class="ptitle">۱ ـ مشخصات تحویل</div>
+      <table class="ptable"><tr>
+        <th>تحویل‌دهنده</th><td>${esc(val('giver'))}</td>
+        <th>سمت</th><td>${esc(val('giverRole'))}</td>
+      </tr><tr>
+        <th>تحویل‌گیرنده</th><td>${esc(val('receiver'))}</td>
+        <th>شماره تماس</th><td>${esc(val('phone'))}</td>
+      </tr><tr>
+        <th>پروژه / برنامه</th><td>${esc(val('project'))}</td>
+        <th>محل استفاده</th><td>${esc(val('location'))}</td>
+      </tr></table>
+    </div>
+
+    <div class="psec"><div class="ptitle">۲ ـ فهرست تجهیزات تحویلی</div>
+      <table class="ptable equipment-print">
+        <thead><tr><th style="width:6%">ردیف</th><th style="width:13%">کد تجهیز</th><th style="width:25%">نام تجهیز</th><th style="width:8%">تعداد</th><th style="width:16%">وضعیت</th><th style="width:32%">اقلام همراه / توضیحات</th></tr></thead>
+        <tbody>${equipment}</tbody>
+      </table>
+    </div>
+
+    <div class="psec"><div class="ptitle">۳ ـ اطلاعات بازگشت</div>
+      <table class="ptable"><tr><th style="width:25%">تاریخ و ساعت پیش‌بینی بازگشت</th><td>${esc(val('returnDate'))}</td></tr></table>
+    </div>
+
+    <div class="psec"><div class="ptitle">۴ ـ تعهد تحویل‌گیرنده</div>
+      <div class="commit">اینجانب تحویل‌گیرنده تجهیزات فوق، دریافت تجهیزات و اقلام همراه درج‌شده در این رسید را تأیید می‌نمایم و متعهد می‌شوم در مدت استفاده، نسبت به نگهداری صحیح و اصولی از تجهیزات اقدام نموده و تجهیزات را در موعد مقرر و در وضعیت مناسب به واحد رسانه تحویل نمایم. همچنین هرگونه آسیب، مفقودی یا نقص ایجادشده در مدت تحویل، مطابق مقررات و تصمیم مسئول واحد رسانه بررسی و پیگیری خواهد شد.</div>
+    </div>
+
+    <div class="psec"><div class="ptitle">۵ ـ توضیحات تکمیلی</div>
+      <div class="notes-print">${esc(val('notes'))}</div>
+    </div>
+
+    <div class="psec"><div class="ptitle">۶ ـ تأیید و امضا</div>
+      <div class="signs">
+        <div class="sign"><h4>تحویل‌دهنده</h4><p>نام: ${esc(val('giver'))}<br>امضا: ................................<br>تاریخ: ................................</p></div>
+        <div class="sign"><h4>تحویل‌گیرنده</h4><p>نام: ${esc(val('receiver'))}<br>امضا: ................................<br>تاریخ: ................................</p><div class="finger">محل اثر<br>انگشت</div></div>
+        <div class="sign"><h4>مهر مجموعه</h4><div class="stamp">محل مهر</div></div>
+      </div>
+    </div>
+    <div class="print-footer"><span>واحد رسانه ـ مجموعه بصائر</span><span>رسید تحویل تجهیزات</span><span>صفحه ۱ از ۱</span></div>
+  </div>`;
+
+  document.getElementById('paperHolder').innerHTML=paper;
+  document.getElementById('preview').style.display='block';
+}
+function closePreview(){document.getElementById('preview').style.display='none'}
+function clearForm(){
+  if(!confirm('همه اطلاعات فرم پاک شود؟')) return;
+  document.querySelectorAll('input,textarea').forEach(x=>x.value='');
+  rows=[]; addRow(); addRow(); addRow();
+}
+addRow();addRow();addRow();
+</script>
+</body>
+</html>
