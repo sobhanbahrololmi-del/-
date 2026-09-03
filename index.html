@@ -22,73 +22,95 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}
 .empty{padding:22px;color:#687481;text-align:center}.remove{border:0;border-radius:6px;background:#fff0f0;color:#b42323;padding:6px 9px}
 .modal,.overlay{display:none;position:fixed;inset:0;background:#0008;z-index:50;padding:20px;overflow:auto}.modal.show,.overlay.show{display:flex;justify-content:center;align-items:flex-start}.box{background:#fff;width:min(620px,100%);margin:25px auto;border-radius:14px;overflow:hidden}.mhead{padding:14px 17px;border-bottom:1px solid #dce2e8;display:flex;justify-content:space-between}.mhead h3{margin:0;font-size:14px}.mbody{padding:17px}.mfoot{padding:12px 17px;border-top:1px solid #dce2e8;display:flex;gap:7px}.close{border:0;background:#f5f7f9;border-radius:7px;width:30px;height:30px}
 .preview{max-width:100%;width:auto;margin:auto;overflow:auto}.preview .paper{margin:0 auto}.preview .paper{margin:auto}.overlay{align-items:flex-start}.report-paper{width:297mm;min-height:auto}.bar{background:#eef2f5;padding:9px;display:flex;justify-content:space-between;gap:8px;align-items:center}.paper{background:#fff;width:210mm;min-height:297mm;padding:13mm 14mm;color:#111;position:relative}.ph{display:grid;grid-template-columns:25% 50% 25%;align-items:center;border-bottom:2px solid #111;padding-bottom:8px}.plogo{width:47px;height:47px;border:2px solid #111;display:grid;place-items:center;font-weight:900;margin:auto}.center{text-align:center}.center h1{font-size:17px;margin:0}.center p{font-size:8px;margin:4px}.meta{font-size:8px;line-height:2}.meta div{border-bottom:1px dotted #777}.sec{margin-top:8px}.st{background:#111;color:#fff;padding:5px 7px;font-size:8px;font-weight:900}.pt{width:100%;border-collapse:collapse}.pt th,.pt td{border:1px solid #333;padding:4px;font-size:7.5px}.commit,.notes{border:1px solid #333;padding:7px;font-size:8px;line-height:2;min-height:55px}.signs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.sign{border:1px solid #333;height:95px;position:relative}.sign h4{background:#eee;border-bottom:1px solid #333;margin:0;padding:4px;font-size:8px;text-align:center}.sign p{font-size:7px;line-height:2;padding:5px;margin:0}.finger{position:absolute;bottom:5px;left:5px;width:40px;height:45px;border:1px dashed #555;display:grid;place-items:center;font-size:6px;text-align:center}.stamp{position:absolute;top:28px;left:50%;transform:translateX(-50%);width:58px;height:58px;border:1px dashed #555;border-radius:50%;display:grid;place-items:center;font-size:7px}.footer{position:absolute;bottom:6mm;right:14mm;left:14mm;border-top:1px solid #777;padding-top:3px;display:flex;justify-content:space-between;font-size:6px}
-.report-paper{width:297mm;min-height:0;box-sizing:border-box;page:report}.report-title{text-align:center;border-bottom:2px solid #111;padding-bottom:8px}.report-title h1{font-size:17px;margin:0}.report-title p{font-size:8px;margin:4px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:9px 0}.summary div{border:1px solid #333;padding:6px;text-align:center;font-size:8px}.report td,.report th{font-size:6.8px;padding:4px}.child-row td{background:#faf8ff}.child-row td:nth-child(2),.child-row td:nth-child(4){padding-right:14px}
+.report-paper{width:297mm;min-height:0;box-sizing:border-box;page:report}.report-title{text-align:center;border-bottom:2px solid #111;padding-bottom:8px}.report-title h1{font-size:17px;margin:0}.report-title p{font-size:8px;margin:4px}.summary{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:9px 0}.summary div{border:1px solid #333;padding:6px;text-align:center;font-size:8px}.report td,.report th{font-size:6.8px;padding:4px}.child-row td{background:#faf8ff}.child-row td:nth-child(2),.child-row td:nth-child(4){padding-right:14px}
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.span4{grid-column:span 2}.stats{grid-template-columns:repeat(3,1fr)}.toolbar{grid-template-columns:1fr}}
 @media(max-width:600px){.app{padding:10px}.topbar,.head{align-items:flex-start;flex-direction:column}.nav{flex-direction:column}.grid{grid-template-columns:1fr}.span2,.span4{grid-column:span 1}.stats{grid-template-columns:1fr 1fr}}
+@page{size:A4;margin:0}
 @page report{size:A4 landscape;margin:0}
 @media print{
-  html,body{margin:0!important;padding:0!important;background:#fff}
+  html,body{margin:0!important;padding:0!important;background:#fff!important;width:auto!important;min-width:0!important}
   .app,.modal,.bar{display:none!important}
   .overlay{display:block!important;position:static!important;background:#fff!important;padding:0!important}
-  .preview{max-width:none;width:auto;margin:0}
-  .paper{
-    box-shadow:none!important;
-    margin:0!important;
+  .preview{display:block!important;width:auto!important;max-width:none!important;margin:0!important;overflow:visible!important}
+
+  /* A4 portrait handover receipt */
+  .paper:not(.report-paper){
+    box-sizing:border-box!important;
     width:210mm!important;
+    min-width:210mm!important;
+    max-width:210mm!important;
     min-height:297mm!important;
     height:auto!important;
-    padding:10mm 11mm!important;
+    margin:0!important;
+    padding:9mm 10mm 13mm!important;
     overflow:visible!important;
-    break-inside:auto;
+    page-break-after:auto!important;
   }
-  .paper:not(.report-paper){page-break-after:auto}
-  .paper:not(.report-paper) .sec,
-  .paper:not(.report-paper) .signs,
-  .paper:not(.report-paper) .commit,
-  .paper:not(.report-paper) .notes{break-inside:avoid}
-  .paper:not(.report-paper) .pt{table-layout:fixed!important}
-  .paper:not(.report-paper) .pt th,
-  .paper:not(.report-paper) .pt td{
+  .paper:not(.report-paper) .ph{grid-template-columns:24% 52% 24%!important}
+  .paper:not(.report-paper) .sec{width:100%!important;box-sizing:border-box!important;margin-top:7px!important}
+  .paper:not(.report-paper) .pt{
+    width:100%!important;
+    max-width:100%!important;
+    table-layout:fixed!important;
+    border-collapse:collapse!important;
+    box-sizing:border-box!important;
+  }
+  .paper:not(.report-paper) .pt th,.paper:not(.report-paper) .pt td{
+    box-sizing:border-box!important;
+    min-width:0!important;
+    max-width:none!important;
     white-space:normal!important;
     overflow-wrap:anywhere!important;
     word-break:break-word!important;
     vertical-align:middle!important;
+    font-size:7pt!important;
+    line-height:1.35!important;
+    padding:3px!important;
   }
+  .paper:not(.report-paper) .commit,.paper:not(.report-paper) .notes{
+    box-sizing:border-box!important;width:100%!important;
+  }
+  .paper:not(.report-paper) .signs{break-inside:avoid!important;page-break-inside:avoid!important}
+  .paper:not(.report-paper) .sign{break-inside:avoid!important;page-break-inside:avoid!important}
 
+  /* A4 landscape equipment inventory: one compact table, split only when needed */
   .report-paper{
-    width:297mm!important;
-    min-height:0!important;
-    height:auto!important;
-    padding:5mm 6mm!important;
-    overflow:visible!important;
+    page:report!important;
     box-sizing:border-box!important;
-    page:report;
+    width:297mm!important;
+    min-width:297mm!important;
+    max-width:297mm!important;
+    min-height:210mm!important;
+    height:auto!important;
+    margin:0!important;
+    padding:4mm 5mm!important;
+    overflow:visible!important;
   }
-  .report-title{padding-bottom:3px!important}
-  .report-title h1{font-size:12pt!important}
-  .report-title p{font-size:6pt!important;margin:2px!important}
-  .summary{gap:2px!important;margin:4px 0!important}
-  .summary div{padding:2px!important;font-size:5.5pt!important}
+  .report-paper .report-title{padding-bottom:2mm!important}
+  .report-paper .report-title h1{font-size:12pt!important}
+  .report-paper .report-title p{font-size:6pt!important;margin:1mm 0!important}
+  .report-paper .summary{gap:1.5mm!important;margin:2mm 0!important}
+  .report-paper .summary div{padding:1.5mm!important;font-size:5.5pt!important;line-height:1.15!important}
   .report-paper .report{
     width:100%!important;
-    min-width:0!important;
+    max-width:100%!important;
     table-layout:fixed!important;
     border-collapse:collapse!important;
   }
-  .report-paper .report th,
-  .report-paper .report td{
-    font-size:5pt!important;
-    line-height:1.15!important;
-    padding:1.5px 2px!important;
+  .report-paper .report th,.report-paper .report td{
+    box-sizing:border-box!important;
+    font-size:4.5pt!important;
+    line-height:1.05!important;
+    padding:0.9mm 1mm!important;
     word-break:break-word!important;
     overflow-wrap:anywhere!important;
     white-space:normal!important;
     vertical-align:middle!important;
   }
-  .report-paper .report tr{break-inside:avoid;page-break-inside:avoid}
-  .report-paper .report thead{display:table-header-group}
-  @page{size:A4;margin:0}
+  .report-paper .report thead{display:table-header-group!important}
+  .report-paper .report tr{break-inside:avoid!important;page-break-inside:avoid!important}
 }
+
 </style>
 </head>
 <body>
@@ -127,7 +149,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}
 <div class="field span2"><label>محل نگهداری</label><input id="storage"></div><div class="field span4"><label>توضیحات</label><textarea id="note"></textarea></div>
 </div></div><div class="mfoot"><button class="btn primary" onclick="save()">ذخیره</button><button class="btn secondary" onclick="closeModal()">انصراف</button></div></div></div>
 
-<div id="overlay" class="overlay"><div class="preview"><div class="bar"><strong id="previewTitle">پیش‌نمایش</strong><div class="actions"><button class="btn primary" onclick="window.print()">🖨 چاپ / ذخیره PDF</button><button class="btn secondary" onclick="closePreview()">بستن</button></div></div><div id="paperHolder"></div></div></div>
+<div id="overlay" class="overlay"><div class="preview"><div class="bar"><strong id="previewTitle">پیش‌نمایش</strong><div class="actions"><button class="btn primary" onclick="printCurrent()">🖨 چاپ / ذخیره PDF</button><button class="btn secondary" onclick="closePreview()">بستن</button></div></div><div id="paperHolder"></div></div></div>
 
 <script>
 const KEY="basair_equipment_v7",COUNTER="basair_equipment_counter_v2";
@@ -135,7 +157,8 @@ const INITIAL=[
 ...Array.from({length:32},(_,i)=>({id:"m"+i,code:"M"+String(i+1).padStart(3,"0"),type:"main",name:"تجهیز اصلی "+(i+1),parentId:null,status:"سالم",location:"",note:""})),
 ...Array.from({length:11},(_,i)=>({id:"s"+i,code:"S"+String(i+1).padStart(3,"0"),type:"sub",name:"قلم فرعی "+(i+1),parentId:"m"+(i%32),status:"سالم",location:"",note:""}))
 ];
-let equipment=load(KEY,INITIAL), counters=calc(), editId=null, modalType="main", handovers=[];
+let equipment=load(KEY,INITIAL), counters={main:0,sub:0}, editId=null, modalType="main", handovers=[];
+counters=calc();
 function load(k,d){try{let x=JSON.parse(localStorage.getItem(k));if(x)return x}catch(e){}return JSON.parse(JSON.stringify(d))}
 function persist(){localStorage.setItem(KEY,JSON.stringify(equipment));localStorage.setItem(COUNTER,JSON.stringify(counters))}
 function nextCode(t){
@@ -199,7 +222,7 @@ function del(id){let x=equipment.find(e=>e.id===id);if(!x)return;if(!confirm(`ح
 function childrenOf(parentId){return equipment.filter(e=>e.type==="sub"&&e.parentId===parentId).sort((a,b)=>num(a.code)-num(b.code))}
 function orderedEquipment(){let mains=equipment.filter(e=>e.type==="main").sort((a,b)=>num(a.code)-num(b.code));let out=[];mains.forEach(m=>{out.push(m);childrenOf(m.id).forEach(c=>out.push(c))});return out.concat(equipment.filter(e=>e.type==="sub"&&!e.parentId).sort((a,b)=>num(a.code)-num(b.code)))}
 function equipmentOptions(selected=""){let html='<option value="">انتخاب تجهیز</option>';equipment.filter(e=>e.type==="main").sort((a,b)=>num(a.code)-num(b.code)).forEach(m=>{html+=`<option value="${esc(m.id)}" ${m.id===selected?"selected":""}>${esc(m.code)} — ${esc(m.name)}</option>`;let cs=childrenOf(m.id);cs.forEach(c=>{html+=`<option value="${esc(c.id)}" ${c.id===selected?"selected":""}>↳ ${esc(c.code)} — ${esc(c.name)}</option>`})});return html}
-function render(){let q=(search.value||"").toLowerCase(),tf=typeFilter.value,sf=statusFilter.value;let a=orderedEquipment().filter(e=>(!q||e.code.toLowerCase().includes(q)||e.name.toLowerCase().includes(q)||(e.note||"").toLowerCase().includes(q))&&(tf==="all"||e.type===tf)&&(sf==="all"||e.status===sf));equipmentBody.innerHTML=a.length?a.map((e,i)=>{let p=e.parentId?equipment.find(z=>z.id===e.parentId):null;return `<tr class="${e.type==='sub'?'child-row':''}"><td>${i+1}</td><td><span class="code">${esc(e.code)}</span></td><td>${e.type==="main"?'<span class="badge bl">اصلی</span>':'<span class="badge" style="background:#f1ecff;color:#6845a5">فرعی</span>'}</td><td><b>${e.type==="sub"?'↳ ':''}${esc(e.name)}</b></td><td>${p?esc(p.code+" — "+p.name):'<span class="badge r">والد تعیین نشده</span>'}</td><td>${badge(e.status)}</td><td>${esc(e.location||"—")}</td><td>${esc(e.note||"—")}</td><td><button class="btn secondary" onclick="openModal('${e.type}','${esc(e.id)}')">ویرایش</button> <button class="btn danger" onclick="del('${esc(e.id)}')">حذف</button></td></tr>`}).join(""):'<tr><td colspan="9"><div class="empty">موردی پیدا نشد.</div></td></tr>';sm.textContent=equipment.filter(e=>e.type==="main").length;ss.textContent=equipment.filter(e=>e.type==="sub").length;sh.textContent=equipment.filter(e=>e.status==="سالم").length;sp.textContent=equipment.filter(e=>["نیازمند بررسی","نیازمند تعمیر","خراب"].includes(e.status)).length;sl.textContent=equipment.filter(e=>e.status==="امانت داده شده").length;st.textContent=equipment.length}
+function render(){let q=(search.value||"").toLowerCase(),tf=typeFilter.value,sf=statusFilter.value;let a=orderedEquipment().filter(e=>(!q||e.code.toLowerCase().includes(q)||e.name.toLowerCase().includes(q)||(e.note||"").toLowerCase().includes(q))&&(tf==="all"||e.type===tf)&&(sf==="all"||e.status===sf));equipmentBody.innerHTML=a.length?a.map((e,i)=>{let p=e.parentId?equipment.find(z=>z.id===e.parentId):null;return `<tr class="${e.type==='sub'?'child-row':''}"><td>${i+1}</td><td><span class="code">${esc(e.code)}</span></td><td>${e.type==="main"?'<span class="badge bl">اصلی</span>':'<span class="badge" style="background:#f1ecff;color:#6845a5">فرعی</span>'}</td><td><b>${e.type==="sub"?'↳ ':''}${esc(e.name)}</b></td><td>${p?esc(p.code+" — "+p.name):'—'}</td><td>${badge(e.status)}</td><td>${esc(e.location||"—")}</td><td>${esc(e.note||"—")}</td><td><button class="btn secondary" onclick="openModal('${e.type}','${esc(e.id)}')">ویرایش</button> <button class="btn danger" onclick="del('${esc(e.id)}')">حذف</button></td></tr>`}).join(""):'<tr><td colspan="9"><div class="empty">موردی پیدا نشد.</div></td></tr>';sm.textContent=equipment.filter(e=>e.type==="main").length;ss.textContent=equipment.filter(e=>e.type==="sub").length;sh.textContent=equipment.filter(e=>e.status==="سالم").length;sp.textContent=equipment.filter(e=>["نیازمند بررسی","نیازمند تعمیر","خراب"].includes(e.status)).length;sl.textContent=equipment.filter(e=>e.status==="امانت داده شده").length;st.textContent=equipment.length}
 function badge(s){let c={سالم:"g","نیازمند بررسی":"y","نیازمند تعمیر":"y",خراب:"r",مفقود:"gr","امانت داده شده":"bl"}[s]||"bl";return `<span class="badge ${c}">${esc(s)}</span>`}
 function addRow(d={}){handovers.push({id:d.id||"",qty:d.qty||1,condition:d.condition||"سالم",accessories:d.accessories||""});drawRows()}
 function drawRows(){rows.innerHTML=handovers.length?handovers.map((r,i)=>`<tr><td>${i+1}</td><td><select onchange="choose(${i},this.value)">${equipmentOptions(r.id)}</select></td><td>${esc((equipment.find(e=>e.id===r.id)||{}).name||"—")}</td><td><input type="number" min="1" value="${esc(r.qty)}" oninput="handovers[${i}].qty=this.value"></td><td><select onchange="handovers[${i}].condition=this.value"><option ${r.condition==="سالم"?"selected":""}>سالم</option><option ${r.condition==="نیازمند بررسی"?"selected":""}>نیازمند بررسی</option><option ${r.condition==="دارای ایراد"?"selected":""}>دارای ایراد</option></select></td><td><input value="${esc(r.accessories)}" oninput="handovers[${i}].accessories=this.value"></td><td><button class="remove" onclick="handovers.splice(${i},1);drawRows()">حذف</button></td></tr>`).join(""):'<tr><td colspan="7"><div class="empty">هنوز تجهیزی انتخاب نشده است.</div></td></tr>'}
@@ -209,9 +232,37 @@ function clearForm(){if(!confirm("فرم پاک شود؟"))return;document.query
 function setDT(){let d=new Date();date.value||=(date.value=new Intl.DateTimeFormat("fa-IR").format(d));time.value||=(time.value=d.toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"}))}
 function commitHandover(){let ids=handovers.filter(r=>r.id).map(r=>r.id);if(!ids.length)return alert("حداقل یک تجهیز برای تحویل انتخاب کنید.");let unique=[...new Set(ids)];unique.forEach(id=>{let e=equipment.find(x=>x.id===id);if(e){e.status="امانت داده شده";if(e.type==="main")childrenOf(e.id).forEach(c=>c.status="امانت داده شده")}});persist();render();refresh();showHandover()}
 function showHandover(){previewTitle.textContent="پیش‌نمایش رسید تحویل";paperHolder.innerHTML=handoverHTML();overlay.classList.add("show")}
-function handoverHTML(){let rr=handovers.filter(r=>r.id).map((r,i)=>{let e=equipment.find(x=>x.id===r.id);return `<tr><td>${i+1}</td><td>${esc(e?.code)}</td><td>${esc(e?.name)}</td><td>${esc(r.qty)}</td><td>${esc(r.condition)}</td><td>${esc(r.accessories)}</td></tr>`}).join("")||'<tr><td colspan="6">موردی ثبت نشده است</td></tr>';return `<div class="paper"><div class="ph"><div class="center"><div class="plogo">ب</div><div style="font-size:7px">مجموعه بصائر</div></div><div class="center"><h1>رسید تحویل تجهیزات رسانه</h1><p>واحد رسانه ـ مجموعه بصائر</p></div><div class="meta"><div>شماره: ${esc(val("receiptNo"))}</div><div>تاریخ: ${esc(val("date"))}</div><div>ساعت: ${esc(val("time"))}</div></div></div><div class="sec"><div class="st">۱ ـ مشخصات تحویل</div><table class="pt"><tr><th>تحویل‌دهنده</th><td>${esc(val("giver"))}</td><th>سمت</th><td>${esc(val("giverRole"))}</td></tr><tr><th>تحویل‌گیرنده</th><td>${esc(val("receiver"))}</td><th>شماره تماس</th><td>${esc(val("phone"))}</td></tr><tr><th>پروژه</th><td>${esc(val("project"))}</td><th>محل استفاده</th><td>${esc(val("useLocation"))}</td></tr></table></div><div class="sec"><div class="st">۲ ـ تجهیزات تحویلی</div><table class="pt"><thead><tr><th>ردیف</th><th>کد</th><th>نام تجهیز</th><th>تعداد</th><th>وضعیت</th><th>اقلام همراه / توضیحات</th></tr></thead><tbody>${rr}</tbody></table></div><div class="sec"><div class="st">۳ ـ بازگشت</div><table class="pt"><tr><th>تاریخ و ساعت پیش‌بینی بازگشت</th><td>${esc(val("returnDate"))}</td></tr></table></div><div class="sec"><div class="st">۴ ـ تعهد</div><div class="commit">اینجانب تحویل‌گیرنده تجهیزات فوق، دریافت تجهیزات و اقلام همراه درج‌شده در این رسید را تأیید نموده و متعهد می‌شوم نسبت به نگهداری صحیح از تجهیزات اقدام کرده و آنها را در موعد مقرر و در وضعیت مناسب به واحد رسانه تحویل نمایم.</div></div><div class="sec"><div class="st">۵ ـ توضیحات</div><div class="notes">${esc(val("notes"))}</div></div><div class="sec"><div class="st">۶ ـ تأیید و امضا</div><div class="signs"><div class="sign"><h4>تحویل‌دهنده</h4><p>نام: ${esc(val("giver"))}<br>امضا: ........................<br>تاریخ: ........................</p></div><div class="sign"><h4>تحویل‌گیرنده</h4><p>نام: ${esc(val("receiver"))}<br>امضا: ........................<br>تاریخ: ........................</p><div class="finger">اثر انگشت</div></div><div class="sign"><h4>مهر مجموعه</h4><div class="stamp">محل مهر</div></div></div></div><div class="footer"><span>واحد رسانه ـ مجموعه بصائر</span><span>رسید تحویل تجهیزات</span><span>صفحه ۱ از ۱</span></div></div>`}
+function handoverHTML(){let rr=handovers.filter(r=>r.id).map((r,i)=>{let e=equipment.find(x=>x.id===r.id);return `<tr><td>${i+1}</td><td>${esc(e?.code)}</td><td>${esc(e?.name)}</td><td>${esc(r.qty)}</td><td>${esc(r.condition)}</td><td>${esc(r.accessories)}</td></tr>`}).join("")||'<tr><td colspan="6">موردی ثبت نشده است</td></tr>';return `<div class="paper"><div class="ph"><div class="center"><div class="plogo">ب</div><div style="font-size:7px">مجموعه بصائر</div></div><div class="center"><h1>رسید تحویل تجهیزات رسانه</h1><p>واحد رسانه ـ مجموعه بصائر</p></div><div class="meta"><div>شماره: ${esc(val("receiptNo"))}</div><div>تاریخ: ${esc(val("date"))}</div><div>ساعت: ${esc(val("time"))}</div></div></div><div class="sec"><div class="st">۱ ـ مشخصات تحویل</div><table class="pt"><colgroup><col style="width:16%"><col style="width:34%"><col style="width:14%"><col style="width:36%"></colgroup><tr><th>تحویل‌دهنده</th><td>${esc(val("giver"))}</td><th>سمت</th><td>${esc(val("giverRole"))}</td></tr><tr><th>تحویل‌گیرنده</th><td>${esc(val("receiver"))}</td><th>شماره تماس</th><td>${esc(val("phone"))}</td></tr><tr><th>پروژه</th><td>${esc(val("project"))}</td><th>محل استفاده</th><td>${esc(val("useLocation"))}</td></tr></table></div><div class="sec"><div class="st">۲ ـ تجهیزات تحویلی</div><table class="pt"><colgroup><col style="width:7%"><col style="width:13%"><col style="width:25%"><col style="width:9%"><col style="width:14%"><col style="width:32%"></colgroup><thead><tr><th>ردیف</th><th>کد</th><th>نام تجهیز</th><th>تعداد</th><th>وضعیت</th><th>اقلام همراه / توضیحات</th></tr></thead><tbody>${rr}</tbody></table></div><div class="sec"><div class="st">۳ ـ بازگشت</div><table class="pt"><colgroup><col style="width:34%"><col style="width:66%"></colgroup><tr><th>تاریخ و ساعت پیش‌بینی بازگشت</th><td>${esc(val("returnDate"))}</td></tr></table></div><div class="sec"><div class="st">۴ ـ تعهد</div><div class="commit">اینجانب تحویل‌گیرنده تجهیزات فوق، دریافت تجهیزات و اقلام همراه درج‌شده در این رسید را تأیید نموده و متعهد می‌شوم نسبت به نگهداری صحیح از تجهیزات اقدام کرده و آنها را در موعد مقرر و در وضعیت مناسب به واحد رسانه تحویل نمایم.</div></div><div class="sec"><div class="st">۵ ـ توضیحات</div><div class="notes">${esc(val("notes"))}</div></div><div class="sec"><div class="st">۶ ـ تأیید و امضا</div><div class="signs"><div class="sign"><h4>تحویل‌دهنده</h4><p>نام: ${esc(val("giver"))}<br>امضا: ........................<br>تاریخ: ........................</p></div><div class="sign"><h4>تحویل‌گیرنده</h4><p>نام: ${esc(val("receiver"))}<br>امضا: ........................<br>تاریخ: ........................</p><div class="finger">اثر انگشت</div></div><div class="sign"><h4>مهر مجموعه</h4><div class="stamp">محل مهر</div></div></div></div><div class="footer"><span>واحد رسانه ـ مجموعه بصائر</span><span>رسید تحویل تجهیزات</span><span>صفحه ۱ از ۱</span></div></div>`}
 function showReport(){previewTitle.textContent="گزارش رسمی فهرست تجهیزات";paperHolder.innerHTML=reportHTML();overlay.classList.add("show")}
-function reportHTML(){let d=new Date(),a=orderedEquipment();let rows=a.map((e,i)=>{let p=e.parentId?equipment.find(z=>z.id===e.parentId):null;return `<tr class="${e.type==='sub'?'child-row':''}"><td>${i+1}</td><td>${esc(e.code)}</td><td>${e.type==="main"?"اصلی":"فرعی"}</td><td>${e.type==="sub"?'↳ ':''}${esc(e.name)}</td><td>${p?esc(p.code+" — "+p.name):"—"}</td><td>${esc(e.status)}</td><td>${esc(e.location||"—")}</td><td>${esc(e.note||"—")}</td></tr>`}).join("");return `<div class="paper report-paper"><div class="report-title"><h1>فهرست رسمی تجهیزات رسانه</h1><p>واحد رسانه ـ مجموعه بصائر ـ مسجد بینایی</p><p>تاریخ تهیه: ${esc(new Intl.DateTimeFormat("fa-IR",{dateStyle:"full"}).format(d))}</p></div><div class="summary"><div>اصلی<br><b>${equipment.filter(e=>e.type==="main").length}</b></div><div>فرعی<br><b>${equipment.filter(e=>e.type==="sub").length}</b></div><div>سالم<br><b>${equipment.filter(e=>e.status==="سالم").length}</b></div><div>نیازمند رسیدگی<br><b>${equipment.filter(e=>["نیازمند بررسی","نیازمند تعمیر","خراب"].includes(e.status)).length}</b></div><div>امانت داده شده<br><b>${equipment.filter(e=>e.status==="امانت داده شده").length}</b></div><div>مجموع<br><b>${equipment.length}</b></div></div><table class="pt report"><thead><tr><th>ردیف</th><th>کد</th><th>نوع</th><th>نام تجهیز</th><th>تجهیز والد</th><th>وضعیت</th><th>محل نگهداری</th><th>توضیحات</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+function reportHTML(){let d=new Date(),a=orderedEquipment();let rows=a.map((e,i)=>{let p=e.parentId?equipment.find(z=>z.id===e.parentId):null;return `<tr class="${e.type==='sub'?'child-row':''}"><td>${i+1}</td><td>${esc(e.code)}</td><td>${e.type==="main"?"اصلی":"فرعی"}</td><td>${e.type==="sub"?'↳ ':''}${esc(e.name)}</td><td>${p?esc(p.code+" — "+p.name):"—"}</td><td>${esc(e.status)}</td><td>${esc(e.location||"—")}</td><td>${esc(e.note||"—")}</td></tr>`}).join("");return `<div class="paper report-paper"><div class="report-title"><h1>فهرست رسمی تجهیزات رسانه</h1><p>واحد رسانه ـ مجموعه بصائر ـ مسجد بینایی</p><p>تاریخ تهیه: ${esc(new Intl.DateTimeFormat("fa-IR",{dateStyle:"full"}).format(d))}</p></div><div class="summary"><div>اصلی<br><b>${equipment.filter(e=>e.type==="main").length}</b></div><div>فرعی<br><b>${equipment.filter(e=>e.type==="sub").length}</b></div><div>سالم<br><b>${equipment.filter(e=>e.status==="سالم").length}</b></div><div>نیازمند رسیدگی<br><b>${equipment.filter(e=>["نیازمند بررسی","نیازمند تعمیر","خراب"].includes(e.status)).length}</b></div><div>امانت داده شده<br><b>${equipment.filter(e=>e.status==="امانت داده شده").length}</b></div><div>مجموع<br><b>${equipment.length}</b></div></div><table class="pt report"><colgroup><col style="width:5%"><col style="width:9%"><col style="width:8%"><col style="width:23%"><col style="width:18%"><col style="width:12%"><col style="width:13%"><col style="width:12%"></colgroup><thead><tr><th>ردیف</th><th>کد</th><th>نوع</th><th>نام تجهیز</th><th>تجهیز والد</th><th>وضعیت</th><th>محل نگهداری</th><th>توضیحات</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+function printCurrent(){
+  const isReport=paperHolder.querySelector('.report-paper');
+  const node=paperHolder.querySelector('.paper');
+  if(!node)return;
+  const w=window.open('','_blank','width=1100,height=800');
+  if(!w){alert('مرورگر اجازه باز کردن پنجره چاپ را نداد. لطفاً پنجره‌های بازشو را برای این فایل فعال کنید.');return;}
+  const css=`
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#fff;color:#111;font-family:Tahoma,Arial,sans-serif}
+    body{direction:rtl}
+    .print-root{margin:0;padding:0}
+    .paper{background:#fff;color:#111;position:relative}
+    .ph{display:grid;grid-template-columns:24% 52% 24%;align-items:center;border-bottom:2px solid #111;padding-bottom:8px}
+    .plogo{width:47px;height:47px;border:2px solid #111;display:grid;place-items:center;font-weight:900;margin:auto}
+    .center{text-align:center}.center h1{font-size:17px;margin:0}.center p{font-size:8px;margin:4px}.meta{font-size:8px;line-height:2}.meta div{border-bottom:1px dotted #777}
+    .sec{margin-top:7px}.st{background:#111;color:#fff;padding:5px 7px;font-size:8px;font-weight:900}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #333;padding:3px;font-size:7pt;line-height:1.35;vertical-align:middle;overflow-wrap:anywhere;word-break:break-word;white-space:normal}
+    .commit,.notes{border:1px solid #333;padding:7px;font-size:8px;line-height:2;min-height:55px}
+    .signs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.sign{border:1px solid #333;height:95px;position:relative}.sign h4{background:#eee;border-bottom:1px solid #333;margin:0;padding:4px;font-size:8px;text-align:center}.sign p{font-size:7px;line-height:2;padding:5px;margin:0}.finger{position:absolute;bottom:5px;left:5px;width:40px;height:45px;border:1px dashed #555;display:grid;place-items:center;font-size:6px;text-align:center}.stamp{position:absolute;top:28px;left:50%;transform:translateX(-50%);width:58px;height:58px;border:1px dashed #555;border-radius:50%;display:grid;place-items:center;font-size:7px}.footer{position:absolute;bottom:6mm;right:10mm;left:10mm;border-top:1px solid #777;padding-top:3px;display:flex;justify-content:space-between;font-size:6px}
+    .report-paper{width:297mm!important;min-height:210mm!important;padding:4mm 5mm!important}
+    .report-title{text-align:center;border-bottom:2px solid #111;padding-bottom:2mm}.report-title h1{font-size:12pt;margin:0}.report-title p{font-size:6pt;margin:1mm 0}.summary{display:grid;grid-template-columns:repeat(6,1fr);gap:1.5mm;margin:2mm 0}.summary div{border:1px solid #333;padding:1.5mm;text-align:center;font-size:5.5pt;line-height:1.15}
+    .report th,.report td{font-size:4.5pt;line-height:1.05;padding:.9mm 1mm}.report tr{break-inside:avoid;page-break-inside:avoid}.report thead{display:table-header-group}
+    @page{size:${isReport?'A4 landscape':'A4'};margin:0}\n    @media print{.print-root{margin:0;padding:0}.paper:not(.report-paper){width:210mm;min-height:297mm;padding:9mm 10mm 13mm;overflow:visible}.paper:not(.report-paper) .pt th,.paper:not(.report-paper) .pt td{font-size:7pt}.report-paper{width:297mm;min-height:210mm}}
+  `;
+  w.document.open();
+  w.document.write('<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>چاپ</title><style>'+css+'</style></head><body><div class="print-root">'+node.outerHTML+'</div><script>window.onload=function(){setTimeout(function(){window.focus();window.print();},150)}<\/script></body></html>');
+  w.document.close();
+}
 function closePreview(){overlay.classList.remove("show")}
 function backup(){counters=calc();let data={version:7,exportedAt:new Date().toISOString(),counters,equipment};let b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="پشتیبان-تجهیزات-بصائر-"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(a.href)}
 fileInput.addEventListener("change",e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!Array.isArray(d.equipment))throw 0;if(confirm("اطلاعات فعلی با این پشتیبان جایگزین شود؟")){equipment=d.equipment;counters=calc();persist();render();refresh();alert("بازیابی با موفقیت انجام شد.")}}catch(x){alert("فایل پشتیبان معتبر نیست.")}fileInput.value=""};r.readAsText(f)})
